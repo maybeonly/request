@@ -1332,8 +1332,9 @@ Request.prototype.getHeader = function (name, headers) {
 Request.prototype.enableUnixSocket = function () {
   // Get the socket & request paths from the URL
   var unixParts = this.uri.path.split(':')
-  var host = unixParts[0]
-  var path = unixParts[1]
+  // Path may contain ':'
+  var host = unixParts.shift()
+  var path = unixParts.join(':')
   // Apply unix properties to request
   this.socketPath = host
   this.uri.pathname = path
